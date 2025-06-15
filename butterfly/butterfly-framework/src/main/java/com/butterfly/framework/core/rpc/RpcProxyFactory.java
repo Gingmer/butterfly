@@ -1,6 +1,7 @@
 package com.butterfly.framework.core.rpc;
 
-import com.alibaba.fastjson.JSON;
+
+import com.alibaba.fastjson2.JSON;
 import com.butterfly.framework.annotation.RpcService;
 import com.butterfly.framework.core.faulttolerance.CircuitBreaker;
 import com.butterfly.framework.core.faulttolerance.DefaultCircuitBreaker;
@@ -19,7 +20,6 @@ import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ConcurrentHashMap;
-import com.alibaba.fastjson.JSON;
 
 /**
  * RPC服务代理工厂，用于创建带有熔断和重试机制的服务代理
@@ -108,9 +108,9 @@ public class RpcProxyFactory implements BeanPostProcessor {
                     return rpcClient.sendRequest(method.getDeclaringClass().getName(), method.getName(), method.getParameterTypes(), args)
                         .thenApply(rpcResponse -> {
                             if (rpcResponse.isSuccess()) {
-                                return JSON.parseObject(rpcResponse.getResult(), method.getReturnType());
+                                return JSON.parseObject((byte[]) rpcResponse.getResult(), method.getReturnType());
                             } else {
-                                throw new RuntimeException(rpcResponse.getError());
+                                throw new RuntimeException(rpcResponse.getErrorMessage());
                             }
                         }).join();
                 } catch (Exception e) {

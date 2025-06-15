@@ -1,0 +1,252 @@
+{
+  "groups": [
+    {
+      "name": "netty.client",
+      "type": "com.butterfly.framework.config.NettyClientConfig",
+      "sourceType": "com.butterfly.framework.config.NettyClientConfig"
+    },
+    {
+      "name": "netty.server",
+      "type": "com.butterfly.framework.config.NettyServerConfig",
+      "sourceType": "com.butterfly.framework.config.NettyServerConfig"
+    },
+    {
+      "name": "rpc.circuit-breaker",
+      "type": "com.butterfly.framework.core.config.CircuitBreakerProperties",
+      "sourceType": "com.butterfly.framework.core.config.CircuitBreakerProperties"
+    },
+    {
+      "name": "rpc.health-check",
+      "type": "com.butterfly.framework.core.config.HealthCheckProperties",
+      "sourceType": "com.butterfly.framework.core.config.HealthCheckProperties"
+    },
+    {
+      "name": "rpc.load-balance",
+      "type": "com.butterfly.framework.core.config.LoadBalanceProperties",
+      "sourceType": "com.butterfly.framework.core.config.LoadBalanceProperties"
+    },
+    {
+      "name": "rpc.load-balance.strategy",
+      "type": "com.butterfly.framework.core.config.LoadBalanceProperties$StrategyProperties",
+      "sourceType": "com.butterfly.framework.core.config.LoadBalanceProperties",
+      "sourceMethod": "getStrategy()"
+    },
+    {
+      "name": "rpc.retry",
+      "type": "com.butterfly.framework.core.config.RetryPolicyProperties",
+      "sourceType": "com.butterfly.framework.core.config.RetryPolicyProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "netty.client.connect-timeout-millis",
+      "type": "java.lang.Integer",
+      "description": "连接超时时间(毫秒)",
+      "sourceType": "com.butterfly.framework.config.NettyClientConfig",
+      "defaultValue": 3000
+    },
+    {
+      "name": "netty.client.max-frame-length",
+      "type": "java.lang.Integer",
+      "description": "最大帧长度",
+      "sourceType": "com.butterfly.framework.config.NettyClientConfig",
+      "defaultValue": 0
+    },
+    {
+      "name": "netty.client.reconnect-interval",
+      "type": "java.lang.Integer",
+      "description": "重连间隔(毫秒)",
+      "sourceType": "com.butterfly.framework.config.NettyClientConfig",
+      "defaultValue": 5000
+    },
+    {
+      "name": "netty.client.server-address",
+      "type": "java.lang.String",
+      "description": "服务端地址",
+      "sourceType": "com.butterfly.framework.config.NettyClientConfig",
+      "defaultValue": "localhost"
+    },
+    {
+      "name": "netty.client.server-port",
+      "type": "java.lang.Integer",
+      "description": "服务端端口",
+      "sourceType": "com.butterfly.framework.config.NettyClientConfig",
+      "defaultValue": 8888
+    },
+    {
+      "name": "netty.client.ssl-enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用SSL",
+      "sourceType": "com.butterfly.framework.config.NettyClientConfig",
+      "defaultValue": false
+    },
+    {
+      "name": "netty.server.backlog",
+      "type": "java.lang.Integer",
+      "description": "TCP连接队列大小",
+      "sourceType": "com.butterfly.framework.config.NettyServerConfig",
+      "defaultValue": 1024
+    },
+    {
+      "name": "netty.server.boss-thread-count",
+      "type": "java.lang.Integer",
+      "description": "Boss线程组数量",
+      "sourceType": "com.butterfly.framework.config.NettyServerConfig",
+      "defaultValue": 1
+    },
+    {
+      "name": "netty.server.connect-timeout-millis",
+      "type": "java.lang.Integer",
+      "description": "连接超时时间(毫秒)",
+      "sourceType": "com.butterfly.framework.config.NettyServerConfig",
+      "defaultValue": 3000
+    },
+    {
+      "name": "netty.server.max-frame-length",
+      "type": "java.lang.Integer",
+      "description": "最大帧长度",
+      "sourceType": "com.butterfly.framework.config.NettyServerConfig",
+      "defaultValue": 0
+    },
+    {
+      "name": "netty.server.port",
+      "type": "java.lang.Integer",
+      "description": "服务器端口",
+      "sourceType": "com.butterfly.framework.config.NettyServerConfig",
+      "defaultValue": 8888
+    },
+    {
+      "name": "netty.server.worker-thread-count",
+      "type": "java.lang.Integer",
+      "description": "Worker线程组数量",
+      "sourceType": "com.butterfly.framework.config.NettyServerConfig",
+      "defaultValue": 0
+    },
+    {
+      "name": "rpc.circuit-breaker.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用熔断器",
+      "sourceType": "com.butterfly.framework.core.config.CircuitBreakerProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "rpc.circuit-breaker.failure-threshold",
+      "type": "java.lang.Integer",
+      "description": "失败阈值：达到此失败次数则触发熔断",
+      "sourceType": "com.butterfly.framework.core.config.CircuitBreakerProperties",
+      "defaultValue": 5
+    },
+    {
+      "name": "rpc.circuit-breaker.half-open-max-attempts",
+      "type": "java.lang.Integer",
+      "description": "半开状态下允许的试探请求数",
+      "sourceType": "com.butterfly.framework.core.config.CircuitBreakerProperties",
+      "defaultValue": 5
+    },
+    {
+      "name": "rpc.circuit-breaker.request-volume-threshold",
+      "type": "java.lang.Integer",
+      "description": "请求volume阈值：在时间窗口内至少需要这么多请求才考虑熔断",
+      "sourceType": "com.butterfly.framework.core.config.CircuitBreakerProperties",
+      "defaultValue": 20
+    },
+    {
+      "name": "rpc.circuit-breaker.reset-timeout-millis",
+      "type": "java.lang.Long",
+      "description": "重置超时时间：熔断器打开后，经过此时间进入半开状态(毫秒)",
+      "sourceType": "com.butterfly.framework.core.config.CircuitBreakerProperties",
+      "defaultValue": 60000
+    },
+    {
+      "name": "rpc.circuit-breaker.statistical-window-millis",
+      "type": "java.lang.Long",
+      "description": "统计时间窗口大小(毫秒)",
+      "sourceType": "com.butterfly.framework.core.config.CircuitBreakerProperties",
+      "defaultValue": 60000
+    },
+    {
+      "name": "rpc.health-check.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用健康检查",
+      "sourceType": "com.butterfly.framework.core.config.HealthCheckProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "rpc.health-check.interval-millis",
+      "type": "java.lang.Integer",
+      "description": "健康检查间隔时间(毫秒)",
+      "sourceType": "com.butterfly.framework.core.config.HealthCheckProperties",
+      "defaultValue": 10000
+    },
+    {
+      "name": "rpc.health-check.max-failure-count",
+      "type": "java.lang.Integer",
+      "description": "最大连续失败次数阈值",
+      "sourceType": "com.butterfly.framework.core.config.HealthCheckProperties",
+      "defaultValue": 3
+    },
+    {
+      "name": "rpc.health-check.timeout-millis",
+      "type": "java.lang.Integer",
+      "description": "健康检查超时时间(毫秒)",
+      "sourceType": "com.butterfly.framework.core.config.HealthCheckProperties",
+      "defaultValue": 3000
+    },
+    {
+      "name": "rpc.load-balance.default-strategy",
+      "type": "java.lang.String",
+      "description": "默认负载均衡策略",
+      "sourceType": "com.butterfly.framework.core.config.LoadBalanceProperties",
+      "defaultValue": "roundRobin"
+    },
+    {
+      "name": "rpc.load-balance.strategy.least-active-threshold",
+      "type": "java.lang.Integer",
+      "description": "最少活跃策略的阈值",
+      "sourceType": "com.butterfly.framework.core.config.LoadBalanceProperties$StrategyProperties",
+      "defaultValue": 10
+    },
+    {
+      "name": "rpc.load-balance.strategy.weighted-random-weights",
+      "type": "java.lang.String",
+      "description": "权重随机策略的权重配置",
+      "sourceType": "com.butterfly.framework.core.config.LoadBalanceProperties$StrategyProperties"
+    },
+    {
+      "name": "rpc.retry.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用重试机制",
+      "sourceType": "com.butterfly.framework.core.config.RetryPolicyProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "rpc.retry.initial-delay-millis",
+      "type": "java.lang.Long",
+      "description": "初始重试延迟(毫秒)",
+      "sourceType": "com.butterfly.framework.core.config.RetryPolicyProperties",
+      "defaultValue": 100
+    },
+    {
+      "name": "rpc.retry.max-delay-millis",
+      "type": "java.lang.Long",
+      "description": "最大重试延迟(毫秒)",
+      "sourceType": "com.butterfly.framework.core.config.RetryPolicyProperties",
+      "defaultValue": 1000
+    },
+    {
+      "name": "rpc.retry.max-retries",
+      "type": "java.lang.Integer",
+      "description": "最大重试次数",
+      "sourceType": "com.butterfly.framework.core.config.RetryPolicyProperties",
+      "defaultValue": 3
+    },
+    {
+      "name": "rpc.retry.multiplier",
+      "type": "java.lang.Double",
+      "description": "延迟乘数(指数退避)",
+      "sourceType": "com.butterfly.framework.core.config.RetryPolicyProperties",
+      "defaultValue": 2
+    }
+  ],
+  "hints": []
+}

@@ -2,8 +2,6 @@ package com.butterfly.framework.core.rpc.circuitbreaker;
 
 import com.butterfly.framework.core.config.CircuitBreakerProperties;
 import com.butterfly.framework.core.faulttolerance.CircuitBreaker;
-import com.butterfly.framework.core.faulttolerance.CircuitBreakerMethod;
-import com.butterfly.framework.core.faulttolerance.CircuitBreakerOpenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +32,7 @@ public class DefaultCircuitBreaker implements CircuitBreaker {
         this.resetTimeout = properties.getResetTimeoutMillis();
     }
 
-    @Override
+
     @Override
 public <T> T execute(CircuitBreakerMethod<T> method) throws Exception {
         checkStateTransition();
@@ -51,6 +49,16 @@ public <T> T execute(CircuitBreakerMethod<T> method) throws Exception {
             onFailure();
             throw e;
         }
+    }
+
+    @Override
+    public CircuitBreakerState getState() {
+        return null;
+    }
+
+    @Override
+    public void reset() {
+
     }
 
     private void checkStateTransition() {

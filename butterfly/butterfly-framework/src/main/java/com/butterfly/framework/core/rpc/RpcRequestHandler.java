@@ -1,6 +1,7 @@
 package com.butterfly.framework.core.rpc;
 
-import com.alibaba.fastjson.JSON;
+
+import com.alibaba.fastjson2.JSON;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;

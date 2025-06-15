@@ -15,7 +15,7 @@ import com.butterfly.framework.core.faulttolerance.RetryPolicy;
  * 指数退避重试策略实现
  * 失败后按指数增长的间隔时间进行重试，避免服务过载
  */
-public class ExponentialBackoffRetryPolicy<T> implements RetryPolicy<T> {
+public class ExponentialBackoffRetryPolicy<T> implements RetryPolicy {
     private static final Logger logger = LoggerFactory.getLogger(ExponentialBackoffRetryPolicy.class);
 
     // 最大重试次数
@@ -55,7 +55,7 @@ public ExponentialBackoffRetryPolicy(RetryPolicyProperties properties) {
 }
 
     @Override
-    public T execute(CircuitBreaker.CircuitBreakerMethod<T> method) throws Exception {
+    public <T> T execute(CircuitBreaker.CircuitBreakerMethod<T> method) throws Exception {
         currentRetryCount.set(0); // 重置重试计数器
         Throwable lastException = null;
 
@@ -101,6 +101,8 @@ public ExponentialBackoffRetryPolicy(RetryPolicyProperties properties) {
         }
         return Math.min(delay, maxDelayMillis);
     }
+
+
 
     @Override
     public int getCurrentRetryCount() {

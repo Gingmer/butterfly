@@ -20,4 +20,5 @@ public interface Serializer {
      * @return 反序列化后的对象
      */
     <T> T deserialize(byte[] data, Class<T> clazz);
+
 }

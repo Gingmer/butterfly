@@ -1,6 +1,6 @@
 package com.butterfly.framework.core.rpc;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -25,9 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PreDestroy;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 企业级RPC客户端实现
@@ -78,7 +76,7 @@ public class RpcClient {
                                     .addLast(new LengthFieldPrepender(4))
                                     .addLast(new StringDecoder(CharsetUtil.UTF_8))
                                     .addLast(new StringEncoder(CharsetUtil.UTF_8))
-                                    .addLast(new RpcClientHandler(this, requestFutureMap));
+                                    .addLast(new RpcClientHandler(RpcClient.this, requestFutureMap));
                         }
                     });
 
@@ -145,19 +143,29 @@ public class RpcClient {
         requestFutureMap.put(requestId, future);
 
         try {
-            // 获取服务地址并发送请求
+            // 1. 获取通道并发送请求
             ChannelFuture channelFuture = getChannelFuture(serviceName);
             channelFuture.channel().writeAndFlush(JSON.toJSONString(request));
             logger.info("已发送RPC请求: {} -> {}", requestId, serviceName);
 
-            // 设置超时处理
-            channelFuture.orTimeout(defaultTimeout, TimeUnit.MILLISECONDS)
-                    .whenComplete((response, ex) -> {
-                        requestFutureMap.remove(requestId);
-                        if (ex != null) {
-                            logger.error("RPC请求超时: {}", requestId, ex);
-                        }
-                    });
+            // 2. 设置超时和完成回调
+            CompletableFuture<RpcResponse> timeoutFuture = new CompletableFuture<>();
+            ScheduledFuture<?> timeoutTask = eventLoopGroup.next().schedule(() -> {
+                if (!future.isDone()) {
+                    requestFutureMap.remove(requestId);
+                    timeoutFuture.completeExceptionally(new TimeoutException("RPC请求超时"));
+                    logger.warn("RPC请求超时: {}", requestId);
+                }
+            }, defaultTimeout, TimeUnit.MILLISECONDS);
+
+            // 3. 正常完成处理
+            future.whenComplete((response, ex) -> {
+                timeoutTask.cancel(true); // 取消超时检查
+                requestFutureMap.remove(requestId);
+                if (ex != null) {
+                    logger.error("RPC请求失败: {}", requestId, ex);
+                }
+            });
 
             return future;
         } catch (Exception e) {
