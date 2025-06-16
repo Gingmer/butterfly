@@ -4,9 +4,11 @@ server:
     threads:
       worker: 20
       io: 2
+
 spring:
   application:
     name: butterfly-framework
+
 management:
   endpoints:
     web:
@@ -31,16 +33,15 @@ netty:
     ssl-enabled: false
 
 rpc:
-
-      interval: 5000
-      timeout: 2000
-      max-failures: 3
-    retry:
-      enabled: true
-      max-retries: 3
-      initial-delay-millis: 1000
-      max-delay-millis: 5000
-      multiplier: 2.0
+  interval: 5000
+  timeout: 2000
+  max-failures: 3
+  retry:
+    enabled: true
+    max-retries: 3
+    initial-delay-millis: 1000
+    max-delay-millis: 5000
+    multiplier: 2.0
   health-check:
     enabled: true
     interval-millis: 10000
